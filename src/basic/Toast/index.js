@@ -36,10 +36,11 @@ class Toast extends Component {
       icon: config.icon,
       timing: config.timing,
       type: config.type,
+      headerHeight: config.height || 85
     });
 
     Animated.spring(this.state.toast, {
-      toValue: height - 150,
+      toValue: (height - this.state.headerHeight) - 150,
       bounciness: 15,
       useNativeDriver: true,
     }).start();
