@@ -24,6 +24,7 @@ class Toast extends Component {
   state = {
     toast: new Animated.Value(height),
     time: new Animated.Value(this.getPercentage(90, width)),
+    headerHeight:85,
     // currentTime: 0,
     // currentPercentage: this.getPercentage(90, width),
   };
@@ -36,7 +37,7 @@ class Toast extends Component {
       icon: config.icon,
       timing: config.timing,
       type: config.type,
-      headerHeight: config.height || 85
+      headerHeight: config.headerHeight || 85
     });
 
     Animated.spring(this.state.toast, {
