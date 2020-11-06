@@ -25,6 +25,7 @@ class Toast extends Component {
     toast: new Animated.Value(height),
     time: new Animated.Value(this.getPercentage(90, width)),
     headerHeight:85,
+    visible:false
     // currentTime: 0,
     // currentPercentage: this.getPercentage(90, width),
   };
@@ -37,7 +38,8 @@ class Toast extends Component {
       icon: config.icon,
       timing: config.timing,
       type: config.type,
-      headerHeight: config.headerHeight || 85
+      headerHeight: config.headerHeight || 85,
+      visible:true
     });
 
     Animated.spring(this.state.toast, {
@@ -84,6 +86,7 @@ class Toast extends Component {
       duration: 300,
       useNativeDriver: true,
     }).start();
+    this.setState({visible: false})
   }
 
   getPercentage(percentage, value) {
@@ -91,7 +94,10 @@ class Toast extends Component {
   }
 
   render() {
-    const { title, text, icon, color } = this.state;
+    const { title, text, icon, color, visible } = this.state;
+    if(!visible){
+      return null
+    }
     return (
       <Animated.View
         ref={(c) => (this._root = c)}
