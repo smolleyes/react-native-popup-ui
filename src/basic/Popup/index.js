@@ -96,8 +96,8 @@ class Popup extends Component {
 
 	handleImage(type) {
 		switch (type) {
-			case 'Success': return require('../../assets/Success.png')
-			case 'Danger': return require('../../assets/Error.png')
+			case 'success': return require('../../assets/Success.png')
+			case 'error': return require('../../assets/Error.png')
 			case 'Warning': return require('../../assets/Warning.png')
 		}
 	}
@@ -105,7 +105,7 @@ class Popup extends Component {
 	render() {
 		const { title, type, textBody, button, buttonText, callback, background } = this.state
 		let el = null;
-		if (this.state.buttons) {
+		if (this.state.buttons && this.state.buttons.length) {
 			el = this.state.buttons.map(button => (
 				<TouchableOpacity style={[styles.Button, styles[button.type]]} onPress={button.callback}>
 					<Text style={styles.TextButton}>{button.text}</Text>
@@ -115,7 +115,6 @@ class Popup extends Component {
 		else {
 			el = <Text></Text>
 		}
-		console.log(el)
 		return (
 			<Animated.View
 				ref={c => this._root = c}
@@ -155,9 +154,8 @@ class Popup extends Component {
 							transform: [
 								{ translateY: this.state.positionView }
 							],
-
+							...styles.ButtonsContainer
 						},
-						styles.ButtonsContainer
           ]}>
 							{el}
 						</Animated.View>
@@ -230,13 +228,15 @@ const styles = StyleSheet.create({
 		minWidth:100,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: 30
+		marginTop: 50
 	},
 	TextButton: {
 		color: '#fff',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		alignSelf: 'stretch',
+		textAlign:"center"
 	},
-	Success: {
+	success: {
 		backgroundColor: '#AAF577',
 		shadowColor: "#AAF577",
 		shadowOffset: {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 		shadowRadius: 6.68,
 		elevation: 11
 	},
-	Danger: {
+	error: {
 		backgroundColor: '#F29091',
 		shadowColor: "#F29091",
 		shadowOffset: {
