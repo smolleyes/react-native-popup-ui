@@ -19,7 +19,8 @@ class Popup extends Component {
 		positionView: new Animated.Value(HEIGHT),
 		opacity: new Animated.Value(0),
 		positionPopup: new Animated.Value(HEIGHT),
-		popupHeight: 0
+		popupHeight: 0,
+		headerHeight: 85
 	}
 
 	start({ ...config }) {
@@ -28,6 +29,7 @@ class Popup extends Component {
 			type: config.type,
 			icon: config.icon !== undefined ? config.icon : false,
 			textBody: config.textBody,
+			buttons:config.buttons,
 			button: config.button !== undefined ? config.button : true,
 			buttonText: config.buttonText || 'Ok',
 			callback: config.callback !== undefined ? config.callback : this.defaultCallback(),
@@ -103,14 +105,17 @@ class Popup extends Component {
 	render() {
 		const { title, type, textBody, button, buttonText, callback, background } = this.state
 		let el = null;
-		if (this.state.button) {
-			el = <TouchableOpacity style={[styles.Button, styles[type]]} onPress={callback}>
-				<Text style={styles.TextButton}>{buttonText}</Text>
-			</TouchableOpacity>
+		if (this.state.buttons) {
+			el = this.state.buttons.map(button => (
+				<TouchableOpacity style={[styles.Button, styles[button.type]]} onPress={button.callback}>
+					<Text style={styles.TextButton}>{button.text}</Text>
+				</TouchableOpacity>
+			))
 		}
 		else {
 			el = <Text></Text>
 		}
+		console.log(el)
 		return (
 			<Animated.View
 				ref={c => this._root = c}
@@ -144,7 +149,18 @@ class Popup extends Component {
 					<View style={styles.Content}>
 						<Text style={styles.Title}>{title}</Text>
 						<Text style={styles.Desc}>{textBody}</Text>
-						{el}
+						<Animated.View style={[
+            {
+							backgroundColor:'transparent',
+							transform: [
+								{ translateY: this.state.positionView }
+							],
+
+						},
+						styles.ButtonsContainer
+          ]}>
+							{el}
+						</Animated.View>
 					</View>
 				</Animated.View>
 			</Animated.View>
@@ -164,8 +180,8 @@ const styles = StyleSheet.create({
 		left: 0
 	},
 	Message: {
-		maxWidth: 300,
-		width: 230,
+		maxWidth: WIDTH - 10,
+		width:WIDTH - 30,
 		minHeight: 300,
 		backgroundColor: '#fff',
 		borderRadius: 30,
@@ -178,7 +194,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	Header: {
-		height: 230,
+		height: 130,
 		width: 230,
 		backgroundColor: '#FBFBFB',
 		borderRadius: 100,
@@ -200,10 +216,18 @@ const styles = StyleSheet.create({
 		color: '#666',
 		marginTop: 10
 	},
+	ButtonsContainer: {
+		alignItems:"stretch",
+		width: WIDTH,
+		justifyContent:"space-evenly",
+		flex:1,
+		flexDirection:"row"
+	},
 	Button: {
 		borderRadius: 50,
 		height: 40,
-		width: 130,
+		width: 'auto',
+		minWidth:100,
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 30
