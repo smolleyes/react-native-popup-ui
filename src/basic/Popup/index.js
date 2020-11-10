@@ -100,6 +100,7 @@ class Popup extends Component {
 			case 'error': return require('../../assets/Error.png')
 			case 'warning': return require('../../assets/Warning.png')
 			case 'confirm': return require('../../assets/Confirm.png')
+		}
 	}
 
 	render() {
