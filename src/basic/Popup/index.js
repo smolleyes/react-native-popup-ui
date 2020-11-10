@@ -98,8 +98,8 @@ class Popup extends Component {
 		switch (type) {
 			case 'success': return require('../../assets/Success.png')
 			case 'error': return require('../../assets/Error.png')
-			case 'Warning': return require('../../assets/Warning.png')
-		}
+			case 'warning': return require('../../assets/Warning.png')
+			case 'confirm': return require('../../assets/Confirm.png')
 	}
 
 	render() {
@@ -250,6 +250,17 @@ const styles = StyleSheet.create({
 	error: {
 		backgroundColor: '#F29091',
 		shadowColor: "#F29091",
+		shadowOffset: {
+			width: 0,
+			height: 5,
+		},
+		shadowOpacity: 0.36,
+		shadowRadius: 6.68,
+		elevation: 11
+	},
+	confirm:{
+		backgroundColor: '#2cf8ff',
+		shadowColor: "#2cf8ff",
 		shadowOffset: {
 			width: 0,
 			height: 5,
