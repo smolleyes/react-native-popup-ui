@@ -137,17 +137,17 @@ class Popup extends Component {
 					}]}
 
 				>
-					<View style={styles.Header} />
-					{
-						this.state.icon ? (this.state.icon) :
-							<Image
-								source={this.handleImage(type)}
-								resizeMode="contain"
-								style={styles.Image}
-							/>
-					}
 					<View style={styles.Content}>
 						<Text style={styles.Title}>{title}</Text>
+						<View style={styles.Header}>
+						{
+							this.state.icon ? (this.state.icon) :
+								<Image
+									source={this.handleImage(type)}
+									style={styles.Image}
+								/>
+						}
+						</View>
 						<Text style={styles.Desc}>{textBody}</Text>
 						<Animated.View style={[
             {
@@ -193,22 +193,27 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	Header: {
-		height: 130,
-		width: 230,
-		backgroundColor: '#FBFBFB',
+		height: 110,
+		backgroundColor: 'white',
 		borderRadius: 100,
-		marginTop: -120
+		//marginTop: -120,
+		alignSelf: 'stretch',
+		justifyContent:"center",
+		alignItems:"center"
 	},
 	Image: {
-		width: 150,
-		height: 80,
+		borderWidth:1,
+		borderColor:"red",
 		position: 'absolute',
-		top: 20
+		top: 20,
+		width:220
 	},
 	Title: {
 		fontWeight: 'bold',
 		fontSize: 18,
-		color: '#333'
+		color: '#333',
+		alignSelf: 'stretch',
+		textAlign:"center"
 	},
 	Desc: {
 		textAlign: 'center',
